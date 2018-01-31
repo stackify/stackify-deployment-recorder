@@ -24,6 +24,8 @@ import hudson.model.Descriptor;
 import hudson.model.Job;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
+import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.java.Log;
 
 /**
@@ -31,6 +33,8 @@ import lombok.extern.java.Log;
  * @author Eric Martin
  */
 @Log
+@ToString
+@Getter
 public class DeploymentConfig extends AbstractDescribableImpl<DeploymentConfig> {
 
     /**
@@ -98,64 +102,6 @@ public class DeploymentConfig extends AbstractDescribableImpl<DeploymentConfig> 
     }
 
     /**
-     * @return Stackify API key
-     */
-    public String getApiKey() {
-        return apiKey;
-    }
-
-    /**
-     * @return Stackify application environment name
-     */
-    public String getAppEnv() {
-        return appEnv;
-    }
-
-    /**
-     * @return Application version
-     */
-    public String getVersion() {
-        return version;
-    }
-
-    /**
-     * @return Deployment name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @return Deployment branch
-     */
-    public String getBranch() {
-        return branch;
-    }
-
-    /**
-     * @return Last commit from the deployment branch
-     */
-    public String getCommit() {
-        return commit;
-    }
-
-    /**
-     * @return Uri for the build / deployment job
-     */
-    public String getUri() {
-        return uri;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "DeploymentConfig [apiKey=" + apiKey + ", appEnv=" + appEnv + ", version=" + version + ", name=" + name
-                + ", branch=" + branch + ", commit=" + commit + ", uri=" + uri + "]";
-    }
-
-    /**
      * DescriptorImpl
      * @author Eric Martin
      */
@@ -170,7 +116,7 @@ public class DeploymentConfig extends AbstractDescribableImpl<DeploymentConfig> 
         public FormValidation doCheckApiKey(@QueryParameter("apiKey") String apiKey) {
             log.fine("DeploymentConfig.DescriptorImpl.doCheckApiKey()");
 
-            if (Strings.isEmpty(apiKey)) {
+            if (Strings.hasValue(apiKey) == false) {
                 return FormValidation.error("Missing API Key");
             }
             
@@ -211,7 +157,7 @@ public class DeploymentConfig extends AbstractDescribableImpl<DeploymentConfig> 
         public FormValidation doCheckAppEnv(@QueryParameter("appEnv") String appEnv) {
             log.fine("DeploymentConfig.DescriptorImpl.doCheckAppEnv()");
 
-            if (Strings.isEmpty(appEnv)) {
+            if (Strings.hasValue(appEnv) == false) {
                 return FormValidation.error("Missing Application");
             }
             
@@ -226,7 +172,7 @@ public class DeploymentConfig extends AbstractDescribableImpl<DeploymentConfig> 
         public FormValidation doCheckVersion(@QueryParameter("version") String version) {
             log.fine("DeploymentConfig.DescriptorImpl.doCheckVersion()");
             
-            if (Strings.isEmpty(version)) {
+            if (Strings.hasValue(version) == false) {
                 return FormValidation.error("Missing Version");
             }
             

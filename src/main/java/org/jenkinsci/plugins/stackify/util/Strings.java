@@ -27,21 +27,4 @@ public class Strings {
         
         return false;
     }
-    
-    /**
-     * Determines if the string is null or empty
-     * @param string The string
-     * @return True if the string is null or empty, false otherwise
-     */
-    public boolean isEmpty(final String string) {
-        if (string == null) {
-            return true;
-        }
-        
-        if (string.length() == 0) {
-            return true;
-        }
-        
-        return false;
-    }
 }

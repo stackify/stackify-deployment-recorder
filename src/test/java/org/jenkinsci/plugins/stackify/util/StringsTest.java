@@ -36,28 +36,4 @@ public class StringsTest {
     public void testHasValueWithNull() {
         Assert.assertFalse(Strings.hasValue(null));
     }
-    
-    /**
-     * testIsEmptyWithEmpty
-     */
-    @Test
-    public void testIsEmptyWithEmpty() {
-        Assert.assertTrue(Strings.isEmpty(""));
-    }
-
-    /**
-     * testIsEmptyWithNull
-     */
-    @Test
-    public void testIsEmptyWithNull() {
-        Assert.assertTrue(Strings.isEmpty(null));
-    }
-
-    /**
-     * testIsEmpty
-     */
-    @Test
-    public void testIsEmpty() {
-        Assert.assertFalse(Strings.isEmpty("testIsEmptyWithString"));
-    }
 }
