@@ -19,7 +19,19 @@ TODO
 
 ### Usage
 
-TODO
+Jenkins Job / Configure
+
+![picture](images/postbuildaction.png)
+
+Add the 'Record Deployment in Stackify Retrace' Post Build Action
+
+![picture](images/blankconfig.png)
+
+Fill in your Stackify API key first. You will then get a drop down list of applications to pick from. The configuration defaults should be fine for a Git + Maven Java project. 
+
+![picture](images/config.png)
+
+Save your job configuration changes.
 
 ### Troubleshooting
 
