@@ -1,7 +1,7 @@
-# Stackify Deployment Notifier
+# Stackify Deployment Recorder
 
 [![Build Status](https://travis-ci.org/stackify/stackify-deployment-recorder.png)](https://travis-ci.org/stackify/stackify-deployment-recorder)
-[![Coverage Status](https://coveralls.io/repos/stackify/stackify-deployment-recorder/badge.png?branch=master)](https://coveralls.io/r/stackify/stackify-deployment-recorder?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/stackify/stackify-deployment-recorder/badge.svg?branch=master)](https://coveralls.io/github/stackify/stackify-deployment-recorder?branch=master)
 
 Jenkins Plugin to Record Deployments in Stackify Retrace
 
