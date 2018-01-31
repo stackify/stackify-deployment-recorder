@@ -13,7 +13,7 @@
     <packaging>hpi</packaging>
 
     <name>Stackify Deployment Recorder</name>
-	<description>Jenkins Plugin to Record Deployments in Stackify Retrace</description>
+	<description>Record Deployments in Stackify Retrace</description>
 	<url>https://github.com/stackify/stackify-deployment-recorder</url>
 	
 	<licenses>
