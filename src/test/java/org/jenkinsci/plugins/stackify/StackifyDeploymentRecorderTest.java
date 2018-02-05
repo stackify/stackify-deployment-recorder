@@ -200,4 +200,54 @@ public class StackifyDeploymentRecorderTest {
         StackifyDeploymentRecorder.DescriptorImpl descriptor = new StackifyDeploymentRecorder.DescriptorImpl();
         Assert.assertNotNull(descriptor.getDisplayName());
     }
+    
+    /**
+     * testPerformWithApiException
+     * @throws Exception 
+     */
+    @Test
+    public void testPerformWithApiException() throws Exception {
+        DeploymentConfig config = Mockito.mock(DeploymentConfig.class);
+        Mockito.when(config.getApiKey()).thenReturn("my-api-key");
+        Mockito.when(config.getAppEnv()).thenReturn("{\"app\":\"myapp\",\"env\":\"myenv\"}");
+        Mockito.when(config.getVersion()).thenReturn("version");
+        Mockito.when(config.getName()).thenReturn("name");
+        Mockito.when(config.getBranch()).thenReturn("branch");
+        Mockito.when(config.getCommit()).thenReturn("commit");
+        Mockito.when(config.getUri()).thenReturn("uri");
+        
+        StackifyDeploymentRecorder recorder = new StackifyDeploymentRecorder(config);
+
+        EnvVars envVars = Mockito.mock(EnvVars.class);
+        Mockito.when(envVars.expand(Mockito.anyString())).thenAnswer(AdditionalAnswers.<String>returnsFirstArg());
+        
+        AbstractBuild<?, ?> build = Mockito.mock(AbstractBuild.class);
+        Mockito.when(build.getResult()).thenReturn(Result.SUCCESS);
+        Mockito.when(build.getEnvironment(Mockito.any(BuildListener.class))).thenReturn(envVars);
+        Mockito.when(build.getBuildVariables()).thenReturn(new HashMap<String, String>());
+        
+        Launcher launcher = Mockito.mock(Launcher.class);
+                
+        PrintStream logger = Mockito.mock(PrintStream.class);
+        BuildListener listener = Mockito.mock(BuildListener.class);
+        Mockito.when(listener.getLogger()).thenReturn(logger);
+        
+        ApiDataService dataService = Mockito.mock(ApiDataService.class);
+        Mockito.doThrow(new RuntimeException()).when(dataService).postDeploymentCompete(Mockito.anyString(), 
+            Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), 
+            Mockito.anyString(), Mockito.anyString());
+        
+        PowerMockito.mockStatic(ServiceLocator.class);
+        Mockito.when(ServiceLocator.getApiDataService()).thenReturn(dataService);
+        
+        boolean rc = recorder.perform(build, launcher, listener);
+        
+        Assert.assertFalse(rc);
+        
+        PowerMockito.verifyStatic(ServiceLocator.class, Mockito.times(1));
+        ServiceLocator.getApiDataService(); 
+        
+        Mockito.verify(dataService, Mockito.times(1)).postDeploymentCompete("my-api-key", "myapp", "myenv", 
+                "version", "name", "branch", "commit", "uri");
+    }
 }

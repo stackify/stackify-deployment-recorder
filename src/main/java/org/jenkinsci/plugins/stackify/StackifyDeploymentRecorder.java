@@ -149,6 +149,7 @@ public class StackifyDeploymentRecorder extends Notifier {
          * {@inheritDoc}
          */
         @Override
+        @SuppressWarnings("rawtypes")
         public boolean isApplicable(final Class<? extends AbstractProject> jobType) {
             return true;
         }

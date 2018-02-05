@@ -18,6 +18,8 @@ public class ServiceLocatorTest {
      */
     @Test
     public void testGetApiDataService() {
-        Assert.assertNotNull(ServiceLocator.getApiDataService());
+        ApiDataService service = ServiceLocator.getApiDataService();
+        Assert.assertNotNull(service);
+        Assert.assertEquals(service, ServiceLocator.getApiDataService());
     }
 }

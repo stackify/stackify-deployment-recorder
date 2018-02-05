@@ -38,6 +38,7 @@ public class ApiResponseHandlerTest {
      * @throws IOException 
      */
     @Test
+    @SuppressWarnings("unchecked")
     public void testHandleResponse() throws IOException {
         StatusLine status = Mockito.mock(StatusLine.class);
         Mockito.when(status.getStatusCode()).thenReturn(200);

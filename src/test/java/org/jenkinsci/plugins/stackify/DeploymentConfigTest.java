@@ -131,6 +131,29 @@ public class DeploymentConfigTest {
     }
     
     /**
+     * testDoFillAppEnvItemsWithException
+     * @throws IOException 
+     */
+    @Test
+    public void testDoFillAppEnvItemsWithException() throws IOException {
+        ApiDataService dataService = Mockito.mock(ApiDataService.class);
+        Mockito.when(dataService.getAppEnvs(Mockito.anyString())).thenThrow(new RuntimeException());
+        
+        PowerMockito.mockStatic(ServiceLocator.class);
+        Mockito.when(ServiceLocator.getApiDataService()).thenReturn(dataService);
+        
+        Job<?,?> job = Mockito.mock(Job.class);
+        Mockito.when(job.hasPermission(Item.CONFIGURE)).thenReturn(true);
+
+        DeploymentConfig.DescriptorImpl descriptor = new DeploymentConfig.DescriptorImpl();
+
+        ListBoxModel model = descriptor.doFillAppEnvItems(job, "my-api-key");
+        
+        Assert.assertNotNull(model);
+        Assert.assertEquals(0, model.size());
+    }
+    
+    /**
      * testDescriptorImplDoCheckAppEnv
      */
     @Test
